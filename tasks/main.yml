@@ -1,0 +1,14 @@
+---
+# tasks file for ansible-zabbix-server
+
+- name: install the zabbix repository | {{ inventory_hostname }}
+  yum: name={{ zabbix_repo }} state=present
+  become: yes
+
+- name: install zabbix-agent | {{ inventory_hostname }}
+  yum: name=zabbix-agent state=present
+  become: yes
+
+- name: start and enable zabbix-agent | {{ inventory_hostname }}
+  service: name=zabbix-agent state=started enabled=yes
+  become: yes
