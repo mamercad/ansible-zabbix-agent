@@ -9,6 +9,11 @@
   yum: name=zabbix-agent state=present
   become: yes
 
+- name: deploy /etc/zabbix/zabbix_agentd.conf | {{ inventory_hostname }}
+  template: src=zabbix_agentd.conf.j2 dest=/etc/zabbix/zabbix_agentd.conf
+  notify: restart-zabbix-agentd
+  become: yes
+
 - name: start and enable zabbix-agent | {{ inventory_hostname }}
   service: name=zabbix-agent state=started enabled=yes
   become: yes
