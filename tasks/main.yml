@@ -1,19 +1,19 @@
 ---
 # tasks file for ansible-zabbix-server
 
-- name: install the zabbix repository | {{ inventory_hostname }}
+- name: install the zabbix repository
   yum: name={{ zabbix_repo }} state=present
   become: yes
 
-- name: install zabbix-agent | {{ inventory_hostname }}
+- name: install zabbix-agent
   yum: name=zabbix-agent state=present
   become: yes
 
-- name: deploy /etc/zabbix/zabbix_agentd.conf | {{ inventory_hostname }}
+- name: deploy /etc/zabbix/zabbix_agentd.conf
   template: src=zabbix_agentd.conf.j2 dest=/etc/zabbix/zabbix_agentd.conf
   notify: restart-zabbix-agentd
   become: yes
 
-- name: start and enable zabbix-agent | {{ inventory_hostname }}
+- name: start and enable zabbix-agent
   service: name=zabbix-agent state=started enabled=yes
   become: yes
